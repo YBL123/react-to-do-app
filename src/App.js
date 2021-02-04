@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Home from './Home';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const App = () => {
   const [list, setList] = useState([]);
   const [formText, setFormText] = useState('');
   const [errMsg, setErrMsg] = useState('');
-  const [activeTask, setActiveTask] = useState({})
-  const [edit, setEdit] = useState(false)
+  const [activeTask, setActiveTask] = useState({});
+  const [edit, setEdit] = useState(false);
 
   // add V
   // delete V
-  // complete
+  // complete -> prints completed tasks, tasks left to complete
   // tick them off when they're done V
   // edit V
-  // store list in local storage + retrieve data on page mount
+  // store list in local storage + retrieve data on page mount V
+  //get locally sored data on page load V
 
-  //get locally sored data on page load
   useEffect(() => {
-    const data = localStorage.getItem("list")
-    setList(JSON.parse(data))
-  }, [])
+    const data = localStorage.getItem('list');
+    setList(JSON.parse(data));
+  }, []);
 
   const addTask = (e) => {
     e.preventDefault();
@@ -33,8 +34,8 @@ const App = () => {
       if (formText.trim() !== '') {
         setList([...list, task]);
 
-        //local storager
-        localStorage.setItem("list", JSON.stringify(list));
+        //local storage
+        localStorage.setItem('list', JSON.stringify(list));
 
         setErrMsg('');
         setFormText('');
@@ -42,11 +43,22 @@ const App = () => {
         setErrMsg('Invalid input');
       }
     } else if (edit) {
-      setList(list.map(task => task.id === activeTask.id ? {...task, text: formText} : task))
-      setEdit(!edit)
-      localStorage.setItem("list", JSON.stringify(list.map(task => task.id === activeTask.id ? {...task, text: formText} : task)))
+      setList(
+        list.map((task) =>
+          task.id === activeTask.id ? { ...task, text: formText } : task
+        )
+      );
+      setEdit(!edit);
+      localStorage.setItem(
+        'list',
+        JSON.stringify(
+          list.map((task) =>
+            task.id === activeTask.id ? { ...task, text: formText } : task
+          )
+        )
+      );
+    }
   };
-  }
   const handleChange = (e) => {
     setFormText(e.target.value);
   };
@@ -63,18 +75,21 @@ const App = () => {
 
   const handleDelete = (id) => {
     setList(list.filter((item) => item.id !== id));
-    localStorage.setItem("list", JSON.stringify(list.filter((item) => item.id !== id)));
+    localStorage.setItem(
+      'list',
+      JSON.stringify(list.filter((item) => item.id !== id))
+    );
   };
 
   const editTask = (task) => {
-    setActiveTask(task)
-    setEdit(!edit)
-    setFormText(task.text)
+    setActiveTask(task);
+    setEdit(!edit);
+    setFormText(task.text);
   };
 
   return (
-    <div>
-      <div>
+    <Container>
+      <div className="title-div">
         <Home title="To-Do" />
       </div>
       <div>
@@ -86,7 +101,7 @@ const App = () => {
             value={formText}
             onChange={handleChange}
           />
-          <button>Add Task</button>
+          <button className="">Add Task</button>
         </form>
       </div>
 
@@ -110,7 +125,7 @@ const App = () => {
         </ul>
         <h2>{errMsg}</h2>
       </div>
-    </div>
+    </Container>
   );
 };
 
