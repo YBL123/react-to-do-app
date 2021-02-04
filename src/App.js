@@ -88,11 +88,11 @@ const App = () => {
   };
 
   return (
-    <Container>
+    <Container className="container">
       <div className="title-div">
         <Home title="To-Do" />
       </div>
-      <div>
+      <div className="card">
         <form onSubmit={addTask}>
           <label>New Task:</label>
           <input
@@ -110,15 +110,11 @@ const App = () => {
           {list.map((task) => {
             // () => to callback the function so it only runs onClick
             return (
-              <li className={task.isComplete ? 'task' : ''} key={task.id}>
+              <li className={task.isComplete ? 'task' : ''} key={task.id} >
                 {task.text}
-                <button onClick={() => completeTask(task.id)}>
-                  Complete Task
-                </button>
+                <button onClick={() => completeTask(task.id)}>Complete Task</button> 
                 <button onClick={() => editTask(task)}>Edit Task</button>
-                <button onClick={() => handleDelete(task.id)}>
-                  Delete Task
-                </button>
+                <button onClick={() => handleDelete(task.id)}>Delete Task</button>
               </li>
             );
           })}
