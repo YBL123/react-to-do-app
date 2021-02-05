@@ -22,6 +22,8 @@ const App = () => {
     setList(JSON.parse(data));
   }, []);
 
+  console.log('task', list);
+
   const addTask = (e) => {
     e.preventDefault();
     if (!edit) {
@@ -64,6 +66,7 @@ const App = () => {
   };
 
   const completeTask = (id) => {
+    console.log('complete');
     const taskIndex = list.findIndex((task) => id === task.id);
     const newList = [...list];
     newList[taskIndex] = {
@@ -88,40 +91,50 @@ const App = () => {
   };
 
   return (
-    <Container className="container">
-      <div className="title-div">
-        <Home title="To-Do" />
-      </div>
-      <div className="card">
-        <form onSubmit={addTask}>
-          <label>New Task:</label>
-          <input
-            type="text"
-            name="name"
-            value={formText}
-            onChange={handleChange}
-          />
-          <button className="">Add Task</button>
-        </form>
-      </div>
+    <section>
+      <Row>
+        <Col>
+          <Container className="container">
+            <div className="title-div">
+              <Home title="To-Do" />
+            </div>
+            <div className="card">
+              <form onSubmit={addTask}>
+                <label>New Task:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formText}
+                  onChange={handleChange}
+                />
+                <button className="">Add Task</button>
+              </form>
+            </div>
 
-      <div>
-        <ul>
-          {list.map((task) => {
-            // () => to callback the function so it only runs onClick
-            return (
-              <li className={task.isComplete ? 'task' : ''} key={task.id} >
-                {task.text}
-                <button onClick={() => completeTask(task.id)}>Complete Task</button> 
-                <button onClick={() => editTask(task)}>Edit Task</button>
-                <button onClick={() => handleDelete(task.id)}>Delete Task</button>
-              </li>
-            );
-          })}
-        </ul>
-        <h2>{errMsg}</h2>
-      </div>
-    </Container>
+            <div>
+              <ul>
+                {list.map((task) => {
+                  // () => to callback the function so it only runs onClick
+                  return (
+                    <li className={task.isComplete ? 'task' : ''} key={task.id}>
+                      {task.text}
+                      <button onClick={() => completeTask(task.id)}>
+                        Complete Task
+                      </button>
+                      <button onClick={() => editTask(task)}>Edit Task</button>
+                      <button onClick={() => handleDelete(task.id)}>
+                        Delete Task
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+              <h2>{errMsg}</h2>
+            </div>
+          </Container>
+        </Col>
+      </Row>
+    </section>
   );
 };
 

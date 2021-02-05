@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap.scss';
+
 body {
   background: royalblue;
 }
@@ -10,4 +12,8 @@ body {
 
 .title-div {
 
+}
+
+.task {
+  text-decoration: line-through;
 }
